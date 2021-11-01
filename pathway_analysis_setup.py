@@ -110,7 +110,7 @@ def find_pathways_organism(cvDict, preDefList = [],writeGraphml=True,  organism=
 	else:
 		pathwayList= list(preDefList)
 	
-	# set up a converter to retain only numbers from KEGG pathway codes
+	#set up a converter to retain only numbers from KEGG pathway codes
 	
 	
 
