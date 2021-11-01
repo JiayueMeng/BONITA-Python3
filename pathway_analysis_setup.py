@@ -68,12 +68,12 @@ def retrieveGraph(name,aliasDict,dict1,dict2, cvDict, geneDict):
 			#nx.write_graphml(graph,coder+'_before.graphml')
 			graph=simplifyNetworkpathwayAnalysis(graph, cvDict)
 			nx.write_graphml(graph,coder+'.graphml')
-			if len(genes.intersection(graph.nodes()))>1:
+			if len(genes.intersection(list(graph.nodes())))>1:
 				nx.write_gpickle(graph,coder+'.gpickle')
-				print(('nodes: ',str(len(graph.nodes())),',   edges:',str(len(graph.edges()))))
+				print(('nodes: ',str(len(list(graph.nodes()))),',   edges:',str(len(list(graph.edges())))))
 				# save the removed nodes and omics data values for just those nodes in the particular pathway
 				pathwaySampleList=[{} for q in range(len(geneDict[list(graph.nodes())[0]]))]
-				for noder in graph.nodes():
+				for noder in list(graph.nodes()):
 					for jn in range(len(pathwaySampleList)):
 						pathwaySampleList[jn][noder]=geneDict[noder][jn]
 				pickle.dump( pathwaySampleList, open( coder+"_sss.pickle", "wb" ) )
@@ -86,7 +86,7 @@ def find_pathways_organism(cvDict, preDefList = [],writeGraphml=True,  organism=
 	aliasDict, koDict, orgDict = {}, {}, {} # set up empty dictionaries for converting codes
 	nc.parseKEGGdict('inputData/ko00001.keg',aliasDict,koDict) # parse the dictionary of ko codes
 	try: # try to retrieve and parse the dictionary containing organism gene names to codes conversion
-		url=urllib3.request('http://rest.kegg.jp/list/'+organism) ##Jiayue - change this and all other calls to urllib3
+		url=urllib3.request('http://rest.kegg.jp/list/'+organism) 
 		text=url.readlines()
 		# reads KEGG dictionary of identifiers between numbers and actual protein names and saves it to a python dictionary
 		for line in text:
@@ -126,7 +126,7 @@ def find_pathways_organism(cvDict, preDefList = [],writeGraphml=True,  organism=
 		coder=str(organism+code) # set up with org letters
 		uploadKEGGcodes_org([coder], graph,orgDict, koDict, organism) # get org pathway
 		# check to see if there is a connected component, simplify graph and print if so
-		allNodes= set(graph.nodes())
+		allNodes= set(list(graph.nodes()))
 		test= len(allNodes.intersection(genes))
 		print(("Pathway: ", x, " Overlap: ", test, " Edges: ", len(graph.edges())))
 		if len(list(nx.connected_component_subgraphs(graph.to_undirected() )))>0: # if there is more than a 1 node connected component, run BONITA
@@ -165,12 +165,12 @@ def simplifyNetworkpathwayAnalysis(graph, ss):
 	# # 4. remove dependence of nodes on complexes that include that node
 	
 	# 1. remove self edges
-	for edge in graph.edges():
+	for edge in list(graph.edges()):
 		if edge[0]==edge[1]:
 			graph.remove_edge(edge[0],edge[1])
 
 	# 2.  remove complexes and rewire components
-	removeNodeList= [x for x in graph.nodes() if  '|||' in x]
+	removeNodeList= [x for x in list(graph.nodes()) if  '|||' in x]
 	for rm in removeNodeList:
 		for start in graph.predecessors(rm):
 			edge1=graph.get_edge_data(start,rm)['signal']
@@ -191,7 +191,7 @@ def simplifyNetworkpathwayAnalysis(graph, ss):
 		graph.remove_node(rm)
 
 	# 3. remove nodes with no input data
-	removeNodeList= [x for x in graph.nodes() if  not x  in list(ss.keys())]
+	removeNodeList= [x for x in list(graph.nodes()) if  not x  in list(ss.keys())]
 	for rm in removeNodeList:
 		for start in graph.predecessors(rm):
 			for finish in graph.successors(rm):
