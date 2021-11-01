@@ -86,7 +86,7 @@ def find_pathways_organism(cvDict, preDefList = [],writeGraphml=True,  organism=
 	aliasDict, koDict, orgDict = {}, {}, {} # set up empty dictionaries for converting codes
 	nc.parseKEGGdict('inputData/ko00001.keg',aliasDict,koDict) # parse the dictionary of ko codes
 	try: # try to retrieve and parse the dictionary containing organism gene names to codes conversion
-		url=urllib3.urlopen('http://rest.kegg.jp/list/'+organism) ##Jiayue - change this and all other calls to urllib3
+		url=urllib3.request('http://rest.kegg.jp/list/'+organism) ##Jiayue - change this and all other calls to urllib3
 		text=url.readlines()
 		# reads KEGG dictionary of identifiers between numbers and actual protein names and saves it to a python dictionary
 		for line in text:
@@ -111,14 +111,14 @@ def find_pathways_organism(cvDict, preDefList = [],writeGraphml=True,  organism=
 		pathwayList= list(preDefList)
 	
 	# set up a converter to retain only numbers from KEGG pathway codes
-	#allChars=string.maketrans('','')
-	#noDigits=allChars.translate(allChars, string.digits)
+	allChars=bytes.maketrans('','') #Jiayue
+	noDigits=allChars.translate(allChars, string.digits)
 
 	genes=set(cvDict.keys()) # find the list of genes included in dataset
 	for x in pathwayList:
 		x=x.replace("path:","")
 		code=str(x)
-		#code= code.translate(allChars, noDigits) # eliminate org letters
+		code= code.translate(allChars, noDigits) # eliminate org letters
 		code = re.sub("[^0-9]", "", code)
 		coder=str('ko'+code) # add ko
 		graph=nx.DiGraph() # open a graph object
@@ -232,7 +232,7 @@ def uploadKEGGcodes_org(codelist, graph, orgDict, KEGGdict, organism):
 #queries the KEGG for the pathways with the given codes then uploads to graph. Need to provide the KEGGdict so that we can name the nodes with gene names rather than KO numbers
 	for code in codelist:
 		try:
-			url=urllib3.urlopen('http://rest.kegg.jp/get/'+code+'/kgml')
+			url=urllib3.request('http://rest.kegg.jp/get/'+code+'/kgml')
 		except:
 			print(('could not read code: ' + code ))
 			continue

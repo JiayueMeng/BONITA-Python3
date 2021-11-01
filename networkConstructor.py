@@ -23,7 +23,7 @@ def uploadKEGGcodes_hsa(codelist, graph, hsaDict, KEGGdict):
 #queries the KEGG for the pathways with the given codes then uploads to graph. Need to provide the KEGGdict so that we can name the nodes with gene names rather than KO numbers
 	for code in codelist:
 		try:
-			url=urllib.request.urlopen('http://rest.kegg.jp/get/'+code+'/kgml')
+			url=urllib3.request('http://rest.kegg.jp/get/'+code+'/kgml')
 		except:
 			print(('could not read code: ' + code ))
 			continue
@@ -321,7 +321,7 @@ def uploadKEGGcodes(codelist, graph, KEGGdict):
 #queries the KEGG for the pathways with the given codes then uploads to graph. Need to provide the KEGGdict so that we can name the nodes with gene names rather than KO numbers
 	for code in codelist:
 		try:
-			url=urllib.request.urlopen('http://rest.kegg.jp/get/'+code+'/kgml')
+			url=urllib3.request('http://rest.kegg.jp/get/'+code+'/kgml')
 		except:
 			print(('could not read code: ' + code ))
 			continue
