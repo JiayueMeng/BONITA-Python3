@@ -111,14 +111,14 @@ def find_pathways_organism(cvDict, preDefList = [],writeGraphml=True,  organism=
 		pathwayList= list(preDefList)
 	
 	# set up a converter to retain only numbers from KEGG pathway codes
-	allChars=bytes.maketrans('','') #Jiayue
-	noDigits=allChars.translate(allChars, string.digits)
+	
+	
 
 	genes=set(cvDict.keys()) # find the list of genes included in dataset
 	for x in pathwayList:
 		x=x.replace("path:","")
 		code=str(x)
-		code= code.translate(allChars, noDigits) # eliminate org letters
+		# eliminate org letters
 		code = re.sub("[^0-9]", "", code)
 		coder=str('ko'+code) # add ko
 		graph=nx.DiGraph() # open a graph object
@@ -129,7 +129,7 @@ def find_pathways_organism(cvDict, preDefList = [],writeGraphml=True,  organism=
 		allNodes= set(list(graph.nodes()))
 		test= len(allNodes.intersection(genes))
 		print(("Pathway: ", x, " Overlap: ", test, " Edges: ", len(graph.edges())))
-		if len(list(nx.connected_component_subgraphs(graph.to_undirected() )))>0: # if there is more than a 1 node connected component, run BONITA
+		if len(list(nx.onnected_components(graph.to_undirected()))) > 0: # if there is more than a 1 node connected component, run BONITA
 			#nx.write_graphml(graph,coder+'_before.graphml')
 			if len(genes.intersection(graph.nodes()))> minOverlap: # if there are 5 genes shared
 				graph=simplifyNetworkpathwayAnalysis(graph, cvDict) # simplify graph to nodes in dataset
