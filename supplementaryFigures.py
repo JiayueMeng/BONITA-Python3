@@ -137,7 +137,7 @@ def scoreERS(codes, iterations=25):
                     rnAllNodes=[pr.count("or")+ 1 for pr in plainRules]
                     ImportanceVals=pathVals[node]
                     inDegree=originalGraph.in_degree(model1.nodeList[node])
-                    if model1.nodeList[node] in graph.nodes(): #remember that we have just selected the largest component of the graph for graph theoretic analysis
+                    if model1.nodeList[node] in list(graph.nodes()): #remember that we have just selected the largest component of the graph for graph theoretic analysis
                         allRes[str(code)][str(iteration)][str(model1.nodeList[node])]=[ruleLengths, rnAllNodes, ImportanceVals, inDegree, scoreFunction6[model1.nodeList[node]]]
                     else:
                         allRes[str(code)][str(iteration)][str(model1.nodeList[node])]=[ruleLengths, rnAllNodes, ImportanceVals, float('NaN'), scoreFunction6[model1.nodeList[node]]]
@@ -315,7 +315,7 @@ def supplementary4():
                     allRes[str(code)][str(iteration)][str(model1.nodeList[node])]=[]
                     ImportanceVals=pathVals[node]
                     inDegree=originalGraph.in_degree(model1.nodeList[node])
-                    if model1.nodeList[node] in graph.nodes(): #remember that we have just selected the largest component of the graph for graph theoretic analysis
+                    if model1.nodeList[node] in list(graph.nodes()): #remember that we have just selected the largest component of the graph for graph theoretic analysis
                         allRes[str(code)][str(iteration)][str(model1.nodeList[node])]=[ImportanceVals, degreeCentrality[model1.nodeList[node]], eigenCentrality[model1.nodeList[node]], hubs[model1.nodeList[node]], authorities[model1.nodeList[node]], inDegree, cfCentrality[model1.nodeList[node]], eccentCentrality[model1.nodeList[node]], betweenCentrality[model1.nodeList[node]]]
                     else:
                         allRes[str(code)][str(iteration)][str(model1.nodeList[node])]=[ImportanceVals, float('NaN'), float('NaN'), float('NaN'), float('NaN'), inDegree, float('NaN'),  float('NaN'), float('NaN')]

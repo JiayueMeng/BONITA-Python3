@@ -81,18 +81,18 @@ def Get_expanded_network(rules, equal_sign='*='):
                     G_expand.add_edge(component.strip(), composite_node)
             elif not parent == child:
                 G_expand.add_edge(parent, child)
-    for node in G_expand.nodes():
+    for node in list(G_expand.nodes()):
         if node[0] == '~' and not '_' in node:
             G_expand.add_edge(node[1:], node)
-    nx.set_node_attributes(G_expand, 'Display Name', {k: ' ' if k in composite_nodes else k for k in G_expand.nodes()})
-    nx.set_node_attributes(G_expand, 'andNode', {k: 1 if k in composite_nodes else 0 for k in G_expand.nodes()})
+    nx.set_node_attributes(G_expand, 'Display Name', {k: ' ' if k in composite_nodes else k for k in list(G_expand.nodes())})
+    nx.set_node_attributes(G_expand, 'andNode', {k: 1 if k in composite_nodes else 0 for k in list(G_expand.nodes())})
 
     edgedict = {}
-    for edge in G_expand.edges():
+    for edge in list(G_expand.edges()):
         edgedict[edge] = 'a'
     nx.set_edge_attributes(G_expand, 'signal', edgedict)
 
-    for node in G_expand.nodes():
+    for node in list(G_expand.nodes()):
         if node[0] == '~' and not '_' in node:
             for downstream in G_expand.successors(node):
                 G_expand.add_edge(node[1:], downstream, signal='i')
@@ -177,7 +177,7 @@ def synthesizeInputs(graph, samples):  # generates synthetic completely random i
     sss = []
     for i in range(0, samples):
         sss.append({})
-    for node in graph.nodes():
+    for node in list(graph.nodes()):
         for i in range(0, samples):
             sss[i][node] = random()
     return sss

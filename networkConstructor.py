@@ -147,7 +147,7 @@ def readKEGGhsa(lines, graph, hsaDict, KEGGdict):
 			node2 = id_to_name[entry2]
 			graph.add_edge(node1,node2, color=color, subtype='/'.join(subtypes), type=relation_type, signal=signal)
 
-	for node in graph.nodes():
+	for node in list(graph.nodes()):
 		if graph.degree(node)==0:
 			graph.remove_node(node)
 

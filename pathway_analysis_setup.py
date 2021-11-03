@@ -64,7 +64,7 @@ def retrieveGraph(name,aliasDict,dict1,dict2, cvDict, geneDict):
 		coder=str('hsa'+code)
 		nc.uploadKEGGcodes_hsa([coder], graph,dict1, dict2)
 		# check to see if there is a connected component, simplify graph and print if so
-		if len(list(nx.connected_component_subgraphs(graph.to_undirected() )))>0:
+		if len(list(nx.connected_component(graph.to_undirected()))) > 0:
 			#nx.write_graphml(graph,coder+'_before.graphml')
 			graph=simplifyNetworkpathwayAnalysis(graph, cvDict)
 			nx.write_graphml(graph,coder+'.graphml')
@@ -128,19 +128,19 @@ def find_pathways_organism(cvDict, preDefList = [],writeGraphml=True,  organism=
 		# check to see if there is a connected component, simplify graph and print if so
 		allNodes= set(list(graph.nodes()))
 		test= len(allNodes.intersection(genes))
-		print(("Pathway: ", x, " Overlap: ", test, " Edges: ", len(graph.edges())))
-		if len(list(nx.onnected_components(graph.to_undirected()))) > 0: # if there is more than a 1 node connected component, run BONITA
+		print(("Pathway: ", x, " Overlap: ", test, " Edges: ", len(list(graph.edges()))))
+		if len(list(nx.connected_components(graph.to_undirected()))) > 0: # if there is more than a 1 node connected component, run BONITA
 			#nx.write_graphml(graph,coder+'_before.graphml')
-			if len(genes.intersection(graph.nodes()))> minOverlap: # if there are 5 genes shared
+			if len(genes.intersection(list(graph.nodes())))> minOverlap: # if there are 5 genes shared
 				graph=simplifyNetworkpathwayAnalysis(graph, cvDict) # simplify graph to nodes in dataset
 				nx.write_graphml(graph,coder+'.graphml') # write graph out
 				nx.write_gpickle(graph,coder+'.gpickle') # write graph out
-				print(('nodes: ',str(len(graph.nodes())),',   edges:',str(len(graph.edges()))))
-				print((graph.nodes()))
-				if len(graph.nodes()) > 0:
+				print(('nodes: ',str(len(list(graph.nodes()))),',   edges:',str(len(list(graph.edges())))))
+				print((list(graph.nodes())))
+				if len(list(graph.nodes())) > 0:
 					# save the removed nodes and omics data values for just those nodes in the particular pathway
 					pathwaySampleList=[{} for q in range(len(geneDict[list(graph.nodes())[0]]))]
-					for noder in graph.nodes():
+					for noder in list(graph.nodes()):
 						for jn in range(len(pathwaySampleList)):
 							pathwaySampleList[jn][noder]=geneDict[noder][jn]
 					pickle.dump( pathwaySampleList, open( coder+"_sss.pickle", "wb" ) )
@@ -209,7 +209,7 @@ def simplifyNetworkpathwayAnalysis(graph, ss):
 		graph.remove_node(rm)
 
 	# 4. remove dependence of nodes on complexes that include that node
-	for node in graph.nodes():
+	for node in list(graph.nodes()):
 		predlist=graph.predecessors(node)
 		for pred in predlist:
 			if '|||' in pred:
@@ -222,7 +222,7 @@ def simplifyNetworkpathwayAnalysis(graph, ss):
 					graph.remove_edge(pred,node)
 		
 
-	for edge in graph.edges():
+	for edge in list(graph.edges()):
 		if edge[0]==edge[1]:
 			graph.remove_edge(edge[0],edge[1])
 	return graph
@@ -358,7 +358,7 @@ def readKEGGorg(lines, graph, orgDict, KEGGdict, organism):
 			node2 = id_to_name[entry2]
 			graph.add_edge(str.upper(str(node1)),str.upper(str(node2)), color=color, subtype='/'.join(subtypes), type=relation_type, signal=signal)
 
-	for node in graph.nodes():
+	for node in list(graph.nodes()):
 		if graph.degree(node)==0:
 			graph.remove_node(node)
 

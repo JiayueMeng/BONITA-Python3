@@ -13,7 +13,7 @@ import math as math
 class modelClass:
 	def __init__(self,graph, sss, groundTruth): 
 		#remove self loops from the graph
-		for node in graph.nodes():
+		for node in list(graph.nodes()):
 			repeat=True
 			while(repeat):
 				repeat=False
@@ -26,7 +26,7 @@ class modelClass:
 		andNodeList=[] #a list of the shadow nodes that represent and relations between incoming edge
 		andNodeInvertList=[] # keeps track of which incoming nodes for each node need to be inverted
 		andLenList=[] # keeps track of how many nodes are coming into each shadow AND node
-		nodeList=graph.nodes()#define the node list simply as the nodes in the graph. 
+		nodeList=list(graph.nodes())#define the node list simply as the nodes in the graph.
 		nodeDict={} #identifies names of nodes with their index in the node list- provide name, get index
 		possibilityLister=[]
 		possibilityInverter=[]
