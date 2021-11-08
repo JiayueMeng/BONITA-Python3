@@ -64,7 +64,7 @@ def retrieveGraph(name,aliasDict,dict1,dict2, cvDict, geneDict):
 		coder=str('hsa'+code)
 		nc.uploadKEGGcodes_hsa([coder], graph,dict1, dict2)
 		# check to see if there is a connected component, simplify graph and print if so
-		if len(list(nx.connected_component(graph.to_undirected()))) > 0:
+		if len(list(nx.connected_components(graph.to_undirected()))) > 0:
 			#nx.write_graphml(graph,coder+'_before.graphml')
 			graph=simplifyNetworkpathwayAnalysis(graph, cvDict)
 			nx.write_graphml(graph,coder+'.graphml')
