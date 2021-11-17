@@ -12,6 +12,7 @@ import csv as csv
 import pickle
 from bioservices import KEGG
 import urllib3
+import urllib
 from bs4 import BeautifulSoup
 import itertools as it
 import re
@@ -109,8 +110,9 @@ def find_pathways_organism(cvDict, preDefList=[], writeGraphml=True, organism="h
         "inputData/ko00001.keg", aliasDict, koDict
     )  # parse the dictionary of ko codes
     try:  # try to retrieve and parse the dictionary containing organism gene names to codes conversion
-        http = urllib3.PoolManager()
-        url = http.request('GET', "http://rest.kegg.jp/list/" + organism)
+        #http = urllib3.PoolManager()
+        #url = http.request('GET', "http://rest.kegg.jp/list/" + organism)
+        url = urllib.request.urlopen("http://rest.kegg.jp/list/" + organism)
         text = url.readlines()
         # reads KEGG dictionary of identifiers between numbers and actual protein names and saves it to a python dictionary
         for line in text:
@@ -279,8 +281,9 @@ def uploadKEGGcodes_org(codelist, graph, orgDict, KEGGdict, organism):
     # queries the KEGG for the pathways with the given codes then uploads to graph. Need to provide the KEGGdict so that we can name the nodes with gene names rather than KO numbers
     for code in codelist:
         try:
-            http = urllib3.PoolManager()
-            url = http.request('GET', "http://rest.kegg.jp/get/" + code + "/kgml")
+            #http = urllib3.PoolManager()
+            #url = http.request('GET', "http://rest.kegg.jp/get/" + code + "/kgml")
+            url = urllib.request.urlopen("http://rest.kegg.jp/get/" + code + "/kgml")
             print(url)
         except:
             print(("could not read code: " + code))
