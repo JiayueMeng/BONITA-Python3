@@ -13,6 +13,7 @@ import pickle
 from bioservices import KEGG
 import urllib3
 import urllib
+import urllib.request
 from bs4 import BeautifulSoup
 import itertools as it
 import re
@@ -110,12 +111,12 @@ def find_pathways_organism(cvDict, preDefList=[], writeGraphml=True, organism="h
         "inputData/ko00001.keg", aliasDict, koDict
     )  # parse the dictionary of ko codes
     try:  # try to retrieve and parse the dictionary containing organism gene names to codes conversion
-        #http = urllib3.PoolManager()
-        #url = http.request('GET', "http://rest.kegg.jp/list/" + organism)
         url = urllib.request.urlopen("http://rest.kegg.jp/list/" + organism)
-        text = url.readlines()
+        soup = str(BeautifulSoup(url, "html.parser").encode('UTF-8'))
+        text = soup.split("\n")
         # reads KEGG dictionary of identifiers between numbers and actual protein names and saves it to a python dictionary
-        for line in text:
+        for line in url:
+            print(line)
             line_split = line.split("\t")
             k = line_split[0].split(":")[1]
             nameline = line_split[1].split(";")
@@ -147,12 +148,15 @@ def find_pathways_organism(cvDict, preDefList=[], writeGraphml=True, organism="h
         coder = str("ko" + code)  # add ko
         graph = nx.DiGraph()  # open a graph object
         nc.uploadKEGGcodes([coder], graph, koDict)  # get ko pathway
+        print(set(list(graph.nodes())))
         coder = str(organism + code)  # set up with org letters
         uploadKEGGcodes_org(
             [coder], graph, orgDict, koDict, organism
         )  # get org pathway
         # check to see if there is a connected component, simplify graph and print if so
         allNodes = set(list(graph.nodes()))
+        print(allNodes)
+        print(list(genes)[0:4])
         test = len(allNodes.intersection(genes))
         print(
             ("Pathway: ", x, " Overlap: ", test, " Edges: ", len(list(graph.edges())))
@@ -280,15 +284,17 @@ def simplifyNetworkpathwayAnalysis(graph, ss):
 def uploadKEGGcodes_org(codelist, graph, orgDict, KEGGdict, organism):
     # queries the KEGG for the pathways with the given codes then uploads to graph. Need to provide the KEGGdict so that we can name the nodes with gene names rather than KO numbers
     for code in codelist:
+        print(code)
         try:
             #http = urllib3.PoolManager()
             #url = http.request('GET', "http://rest.kegg.jp/get/" + code + "/kgml")
             url = urllib.request.urlopen("http://rest.kegg.jp/get/" + code + "/kgml")
-            print(url)
         except:
             print(("could not read code: " + code))
             continue
-        text = url.readlines()
+        soup = str(BeautifulSoup(url, "html.parser").encode('UTF-8'))
+        text = soup.split("\n")
+        print(text)
         readKEGGorg(text, graph, orgDict, KEGGdict, organism)
         # print(code)
         # print(graph.nodes())
@@ -301,7 +307,7 @@ def readKEGGorg(lines, graph, orgDict, KEGGdict, organism):
     id_to_name = {}  # map id numbers to names
 
     for entry in soup.find_all("entry"):
-        # print(entry)
+        print(entry)
         entry_split = entry["name"].split(":")
         if len(entry_split) > 2:
             if entry_split[0] == organism or entry_split[0] == "ko":
@@ -499,13 +505,13 @@ if __name__ == "__main__":
         else:
             findPathwaysHuman(
                 cvDict, gmtName, geneDict
-            )  # generate gpickles needed for pathway analysis
+            )  # generate gpickles needed for pathway analysis # checked
 
     else:
         print(org)
         print(paths)
         if paths == "None":
-            find_pathways_organism(cvDict, organism=org, writeGraphml=True)
+            find_pathways_organism(cvDict, organism=org, writeGraphml=True) #checked, correct
         else:
             inputfile = open(paths, "r")
             lines = inputfile.readlines()
@@ -515,4 +521,4 @@ if __name__ == "__main__":
                     pathList.append(element.strip())
             find_pathways_organism(
                 cvDict, organism=org, preDefList=pathList, writeGraphml=True
-            )
+            ) # to be checked
