@@ -3,6 +3,8 @@ import operator
 import networkx as nx
 import re
 import urllib3
+import urllib
+import urllib.request
 import csv
 import itertools as it
 import sys
@@ -50,7 +52,7 @@ def uploadKEGGcodes_hsa(codelist, graph, hsaDict, KEGGdict):
     # queries the KEGG for the pathways with the given codes then uploads to graph. Need to provide the KEGGdict so that we can name the nodes with gene names rather than KO numbers
     for code in codelist:
         try:
-            url = urllib3.request("http://rest.kegg.jp/get/" + code + "/kgml")
+            url = urllib.request.urlopen("http://rest.kegg.jp/get/" + code + "/kgml")
         except:
             print(("could not read code: " + code))
             continue
@@ -276,7 +278,7 @@ def parseKEGGdict(filename, aliasDict, dict1):
 
 def readKEGG(lines, graph, KEGGdict):
     # read all lines into a bs4 object using libXML parser
-    soup = BeautifulSoup("".join(lines), "xml")
+    soup = str(BeautifulSoup("".join(lines), "xml"))
     groups = {}  # store group IDs and list of sub-ids
     id_to_name = {}  # map id numbers to names
 
@@ -392,7 +394,7 @@ def uploadKEGGcodes(codelist, graph, KEGGdict):
     # queries the KEGG for the pathways with the given codes then uploads to graph. Need to provide the KEGGdict so that we can name the nodes with gene names rather than KO numbers
     for code in codelist:
         try:
-            url = urllib3.request("http://rest.kegg.jp/get/" + code + "/kgml")
+            url = urllib.request.urlopen("http://rest.kegg.jp/get/" + code + "/kgml")
         except:
             print(("could not read code: " + code))
             continue
