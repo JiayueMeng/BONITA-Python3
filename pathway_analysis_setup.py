@@ -2,7 +2,6 @@
 import networkx as nx
 import operator
 
-# from sets import Set
 import scipy.stats as stat
 import requests
 import argparse as argparse

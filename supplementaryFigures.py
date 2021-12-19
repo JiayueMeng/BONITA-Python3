@@ -12,7 +12,6 @@ import os
 import scipy.stats
 import networkx as nx
 import operator
-from sets import Set
 import scipy.stats as stat
 import requests
 import argparse as argparse
@@ -644,7 +643,7 @@ def uploadKEGGcodes_hsa(codelist, graph, hsaDict, KEGGdict):
     # This code catches the error and continues on through the provided set of  gmt pathways
     for code in codelist:
         try:
-            url = urllib.request("http://rest.kegg.jp/get/" + code + "/kgml")
+            url = urllib.request.urlopen("http://rest.kegg.jp/get/" + code + "/kgml")
             text = url.readlines()
             nc.readKEGGhsa(text, graph, hsaDict, KEGGdict)
         except urllib.error.HTTPError as e:

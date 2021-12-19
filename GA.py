@@ -7,7 +7,6 @@ from random import random, seed, shuffle, randint, sample, choice
 import numpy as numpy
 import operator
 import math as math
-from sets import Set
 import gc as gc
 from collections import defaultdict, deque
 from itertools import chain

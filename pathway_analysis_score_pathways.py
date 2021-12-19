@@ -45,21 +45,19 @@ class modelHolder:
 def outputGraphs(pathway, RAval, comparator, pathImportances):
     # write original graph with annotations
     original = pathway[3].copy()
+    nx.set_node_attributes(original,values={k: k for k in list(original.nodes())},name="Display Name")
+    nx.set_node_attributes(original, name = "andNode", values = {k: 0 for k in list(original.nodes())})
     nx.set_node_attributes(
-        original, "Display Name", {k: k for k in list(original.nodes())}
+        original, name = "RA", values = {k: RAval[k] for k in list(original.nodes())}
     )
-    nx.set_node_attributes(original, "andNode", {k: 0 for k in list(original.nodes())})
-    nx.set_node_attributes(
-        original, "RA", {k: RAval[k] for k in list(original.nodes())}
-    )
-    # print(maximportance)
+
     maximportance = max([(pathImportances[v]) for v in pathImportances])
     if maximportance == 0:
         maximportance = 1.0
     nx.set_node_attributes(
         original,
-        "IS",
-        {
+        name = "IS",
+        values = {
             k: (float(pathImportances[k]) / maximportance)
             for k in list(original.nodes())
         },
@@ -68,16 +66,16 @@ def outputGraphs(pathway, RAval, comparator, pathImportances):
     ruleGraph = Get_expanded_network(pathway[2][0].split("\n"), equal_sign="*=")
     nx.set_node_attributes(
         ruleGraph,
-        "RA",
-        {
+        name = "RA",
+        values = {
             k: RAval[k] if k in list(original.nodes()) else 0.0
             for k in list(ruleGraph.nodes())
         },
     )
     nx.set_node_attributes(
         ruleGraph,
-        "IS",
-        {
+        name = "IS",
+        values = {
             k: (float(pathImportances[k]) / maximportance)
             if k in list(original.nodes())
             else 0.0
