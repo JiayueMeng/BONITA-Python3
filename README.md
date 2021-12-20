@@ -1,4 +1,4 @@
-# BONITA
+# BONITA-Python3
 
 BONITA was originally written in Python 2 and tested with Python 2-compatible packages. This version of the packages ports BONITA to Python 3. Functionality remains the same. However, we refer users to the original release to reproduce figures from the BONITA paper. 
 
