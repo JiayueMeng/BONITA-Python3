@@ -1,36 +1,45 @@
 # BONITA
 
+BONITA was originally written in Python 2 and tested with Python 2-compatible packages. This version of the packages ports BONITA to Python 3. Functionality remains the same. However, we refer users to the original release to reproduce figures from the BONITA paper. 
+
 BONITA- Boolean Omics Network Invariant-Time Analysis is a package for the inference of Boolean rules and pathway analysis on omics data. It can be applied to help uncover underlying relationships in biological data. Please see our [publication](https://doi.org/10.1371/journal.pcbi.1007317) for more information. 
 
-**Authors**: _Rohith Palli, Mukta G. Palshikar, and Juilee Thakar_\
-**Maintainer**: Please contact Rohith Palli at rohith_palli@urmc.rochester.edu
+Authors: _Rohith Palli, Mukta G. Palshikar and Juilee Thakar_\
+
+**BONITA ported to Python 3 by Mukta G. Palshikar and Jiayue Meng**
+
+**Maintainer**: Please contact Juilee Thakar at Juilee_Thakar@urmc.rochester.edu\
 
 # Citation
-We would appreciate the citation of our manuscript describing BONITA, below, for any use of our code. 
+
+We would appreciate the citation of our manuscript describing the original BONITA release, below, for any use of our code. 
 
 Palli R, Palshikar MG, Thakar J (2019) Executable pathway analysis using ensemble discrete-state modeling for large-scale data. PLoS Comput Biol 15(9): e1007317. (https://doi.org/10.1371/journal.pcbi.1007317)
 
 # Installation
-BONITA is designed for use with distributed computing systems. A desktop version installation and use guide are provided in the wiki (https://github.com/Thakar-Lab/BONITA/wiki). Necessary SLURM commands are included. If users are having trouble translating to PBS or other queueing standards for their computing environment, please contact maintainer Rohith Palli at rohith_palli@urmc.rochester.edu. 
+BONITA is designed for use with distributed computing systems. Necessary SLURM commands are included. If users are having trouble translating to PBS or other queueing standards for their computing environment, please contact Juilee Thakar at Juilee_Thakar@urmc.rochester.edu
 
-## Install Python
-Please create a virtual environment with the latest version of Intel Python 2 and install the following packages (all accessible by pip):
-* networkx==1.11
-* pandas
-* requests
-* deap
-* lxml
-* bs4
-* seaborn
-* bioservices\
-The software was tested with Intel Python 2.7.12 and the following package versions: 
-networkx==1.11, pandas==0.19.0, requests==2.11.1, deap==1.0.2, 
-bs4==0.0.1, lxml==4.1.1, seaborn==0.8.1. In our experience, only the networkx version affects BONITA functionality. 
+## Create a conda environment to run BONITA
+
+Use a terminal, or an Anaconda Prompt for the following:
+
+1. Create a conda environment using the provided YML file
+
+`conda env create –name BONITA --file platform_BONITA.yaml`
+
+2. Activate the BONITA environment
+
+`activate BONITA`
+
+3. Check that the BONITA environment is available and correctly installed:
+
+`conda info --envs`
+
 
 ## Install BONITA
 You can download and use BONITA in one of two ways:
 1. Download a zipped folder containing all the files you need (github download link in green box above and to the right)\
-1. Clone this git repository in the folder of your choice using the command `git clone https://github.com/YOUR-USERNAME/YOUR-REPOSITORY`\
+2. Clone this git repository in the folder of your choice using the command `git clone https://github.com/YOUR-USERNAME/YOUR-REPOSITORY`\
 
 Next, the C code must be compiled using the make file. Simply type make while in the BONITA folder. \
 `make`\
@@ -52,7 +61,7 @@ There are three main steps in BONITA: prepare pathways for rule inference, rule 
 
 **This step requires internet access.** 
 
-**There are three ways to complete this process: 1) on a gmt of human pathways, 2) on all KEGG pathways for any organism, or 3) on a list of KEGG pathways for any organism**
+There are three ways to complete this process: 1) on a gmt of human pathways,\ 2) on all KEGG pathways for any organism,\ or 3) on a list of KEGG pathways for any organism\
 
 **Only Option 1 was used and tested in our manuscript. Caution should be exercised in interpreting results of other two methods. At a minimum, graphmls with impact scores and relative abundance should be examined before drawing conclusions about pathway differences.**
 
