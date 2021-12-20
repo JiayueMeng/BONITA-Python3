@@ -56,7 +56,7 @@ def uploadKEGGcodes_hsa(codelist, graph, hsaDict, KEGGdict):
         except:
             print(("could not read code: " + code))
             continue
-        text = BeautifulSoup(url, "html.parser")#.encode('UTF-8') #url.readlines()
+        text = BeautifulSoup(url, "html.parser")  # .encode('UTF-8') #url.readlines()
         readKEGGhsa(text, graph, hsaDict, KEGGdict)
         # print(code)
         # print(graph.nodes())
@@ -64,7 +64,7 @@ def uploadKEGGcodes_hsa(codelist, graph, hsaDict, KEGGdict):
 
 def readKEGGhsa(lines, graph, hsaDict, KEGGdict):
     # read all lines into a bs4 object using libXML parser
-    soup = lines #BeautifulSoup("".join(lines), "xml")
+    soup = lines  # BeautifulSoup("".join(lines), "xml")
     groups = {}  # store group IDs and list of sub-ids
     id_to_name = {}  # map id numbers to names
 
@@ -226,7 +226,6 @@ def parseKEGGdict(filename):
     return dict
 
 
-
 def parseKEGGdicthsa(filename, aliasDict, dict1):
     # reads KEGG dictionary of identifiers between orthology numbers and actual protein names and saves it to a python dictionary
     # extends above method to also keep track of gene names that are identical so we can recover those from input data as well
@@ -301,7 +300,9 @@ def readKEGG(lines, graph, KEGGdict):
                 group_ids.append(component["id"])
             groups[entry_id] = group_ids
         else:
-            graph.add_node(entry_name, name=entry_name, type=entry_type) #networkx updated function add_node
+            graph.add_node(
+                entry_name, name=entry_name, type=entry_type
+            )  # networkx updated function add_node
 
     for relation in soup.find_all("relation"):
         (color, signal) = ("black", "a")

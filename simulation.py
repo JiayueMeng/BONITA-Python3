@@ -61,14 +61,16 @@ class modelClass:
         # find all possible combinations of upstream contributors for each node. These become the shadow And nodes
         for i in range(0, len(nodeList)):
             permtemp = []
-            predtemp = list(graph.predecessors(nodeList[i]))  # get predecessors of node.
+            predtemp = list(
+                graph.predecessors(nodeList[i])
+            )  # get predecessors of node.
             succnum.append(len(list(graph.successors(nodeList[i]))))
             possibilitytemp = [nodeDict[predder] for predder in predtemp]
             possibilityLister.append(list(possibilitytemp))
             activity = []
             predProbsTemp = []
             for node in possibilitytemp:
-                #if graph.edges[nodeList[node]][nodeList[i]]["signal"] == "a":
+                # if graph.edges[nodeList[node]][nodeList[i]]["signal"] == "a":
                 if graph.get_edge_data(nodeList[node], nodeList[i])["signal"] == "a":
                     activity.append(False)
                 else:
@@ -130,8 +132,11 @@ class modelClass:
             for sequence in possibilities:
                 activity = []
                 for node in sequence:
-                    #if graph.edge[nodeList[node]][nodeList[i]]["signal"] == "a":
-                    if graph.get_edge_data(nodeList[node], nodeList[i])["signal"] == "a":
+                    # if graph.edge[nodeList[node]][nodeList[i]]["signal"] == "a":
+                    if (
+                        graph.get_edge_data(nodeList[node], nodeList[i])["signal"]
+                        == "a"
+                    ):
                         activity.append(False)
                     else:
                         activity.append(True)

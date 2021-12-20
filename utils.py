@@ -92,19 +92,19 @@ def Get_expanded_network(rules, equal_sign="*="):
             G_expand.add_edge(node[1:], node)
     nx.set_node_attributes(
         G_expand,
-        name = "Display Name",
-        values = {k: " " if k in composite_nodes else k for k in list(G_expand.nodes())},
+        name="Display Name",
+        values={k: " " if k in composite_nodes else k for k in list(G_expand.nodes())},
     )
     nx.set_node_attributes(
         G_expand,
-        name = "andNode",
-        values = {k: 1 if k in composite_nodes else 0 for k in list(G_expand.nodes())},
+        name="andNode",
+        values={k: 1 if k in composite_nodes else 0 for k in list(G_expand.nodes())},
     )
 
     edgedict = {}
     for edge in list(G_expand.edges()):
         edgedict[edge] = "a"
-    nx.set_edge_attributes(G_expand, name = "signal", values = edgedict)
+    nx.set_edge_attributes(G_expand, name="signal", values=edgedict)
 
     for node in list(G_expand.nodes()):
         if node[0] == "~" and not "_" in node:
