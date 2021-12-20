@@ -112,6 +112,6 @@ To accomplish this, the proper inputs must be provided to pathway_analysis_score
 
 Then run the pathway analysis script:
 
-```python pathway_analysis_score_pathways.py Your_omics_data Your_condition_matrix Your_desired_contrasts -sep Separator_used_in_gmt_and_omics_data``
+```python pathway_analysis_score_pathways.py Your_omics_data Your_condition_matrix Your_desired_contrasts -sep Separator_used_in_gmt_and_omics_data```
 
 If your files are tab separated, then the following command can be used: ```python pathway_analysis_score_pathways.py -t Your_omics_data Your_condition_matrix Your_desired_contrasts```
