@@ -4,7 +4,7 @@ _Authors: Mukta G. Palshikar and Jiayue Meng_
 
 **For a demonstration of the BONITA pipeline, see the below tutorial. The instructions in this README file cover all anticipated use cases.**
 
-This tutorial demostrates the BONITA pipeline for rule inference and pathway analysis on a previously published RNA-sequencing dataset from peripheral blood mononuclear cells from infants with mild or severe respiratory syncitial virus. A set of 37 KEGG pathways that are modulated by RSV infection are used for pathway analysis.
+This tutorial demostrates the BONITA pipeline for rule inference and pathway analysis on a previously published RNA-sequencing dataset from peripheral blood mononuclear cells from infants with mild or severe respiratory syncitial virus. A set of 37 KEGG pathways that are modulated by RSV infection are used for pathway analysis. All the required files are provided in the Tutorials folder.
 
 __Dataset published in:__
 
@@ -46,19 +46,20 @@ Now you have a fully functional distribution of BONITA! Time to gather your data
 
 # Usage
 
-You will need the following files to run BONITA:
-* omics data as a plaintext table (csv, tsv, or similar) with the first row containing a holder for gene symbol column then sample names and subsequent rows containing gene symbol in first column and column-normalized (rpm or rpkm in transcriptomics) abundance measures in other columns. 
-* gmt file with list of KEGG pathways to be considered (can be downloaded from msigdb)
-* matrix of conditions with each line representing a sample and the first column containing the names of the samples and subsequent columns describing 1/0 if the sample is part of that condition or not. 
-* list of contrasts you would like to run with each contrast on a single line
+We provide the following files to test the BONITA pipeline, in the Tutorials folder:
 
-There are three main steps in BONITA: prepare pathways for rule inference, rule inference, and pathway analysis. All necessary files for an example run are provided in the pathway_analysis folder within experiments folder. The preparation step requires internet access to access the KEGG API. 
+* __rsv.extreme.phenotype.CD4.tophat.rpm.filtered.20150310.txt__: omics data as a plaintext table with the first row containing a holder for gene symbol column then sample names and subsequent rows containing gene symbol in first column and column-normalized abundance measures in other columns. 
+* __filtered.c2.cp.kegg.v3.0.symbols.gmt__: gmt file with list of KEGG pathways to be considered
+* __CD4_matrix.txt__: matrix of conditions with each line representing a sample and the first column containing the names of the samples and subsequent columns describing 1/0 if the sample is part of that condition or not. 
+* __diffFile.txt__: list of contrasts you would like to run with each contrast on a single line
+
+There are three main steps in BONITA: prepare pathways for rule inference, rule inference, and pathway analysis. The preparation step requires internet access to access the KEGG API. 
 
 ## Step 1: Pathway preparation
 
 BONITA needs omics data, gmt file, and an indication of what character is used to separate columns in the file. For example, a traditional comma separated value file (csv) would need BONITA input "-sep ,". Since tab can't be passed in as easily, a -t command will automatically flag tab as the separator. The commands are below:
 
-```python pathway_analysis_setup.py -t -org 'hsa' --data 'rsv.extreme.phenotype.CD4.tophat.rpm.filtered.20150310.txt'```
+```python pathway_analysis_setup.py -t -gmt 'filtered.c2.cp.kegg.v3.0.symbols.gmt' --data 'rsv.extreme.phenotype.CD4.tophat.rpm.filtered.20150310.txt'```
 
 ## Step 2: Rule inference
 
