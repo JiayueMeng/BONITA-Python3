@@ -8,7 +8,7 @@ Authors: _Rohith Palli, Mukta G. Palshikar and Juilee Thakar_
 
 **BONITA ported to Python 3 by Mukta G. Palshikar and Jiayue Meng**
 
-**For a demonstration of the BONITA pipeline, see the tutorial in Tutorials/BONITA_pipeline_tutorial.md. The instructions in this README file cover all anticipated use cases.**
+**For a demonstration of the BONITA pipeline, see the tutorial in Tutorials/BONITA_pipeline_tutorial.md. The instructions in the current README file cover all anticipated use cases.**
 
 **Maintainer**: Please contact Juilee Thakar at Juilee_Thakar@urmc.rochester.edu
 
