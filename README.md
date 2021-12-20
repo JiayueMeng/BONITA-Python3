@@ -65,7 +65,10 @@ There are three main steps in BONITA: prepare pathways for rule inference, rule 
 
 **This step requires internet access.** 
 
-There are three ways to complete this process: 1) on a gmt of human pathways,\ 2) on all KEGG pathways for any organism,\ or 3) on a list of KEGG pathways for any organism\
+There are three ways to complete this process: 
+1. on a gmt of human pathways
+2. on all KEGG pathways for any organism, or
+3. on a list of KEGG pathways for any organism
 
 **Only Option 1 was used and tested in our manuscript. Caution should be exercised in interpreting results of other two methods. At a minimum, graphmls with impact scores and relative abundance should be examined before drawing conclusions about pathway differences.**
 
