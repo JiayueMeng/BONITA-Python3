@@ -4,11 +4,11 @@ _Authors: Mukta G. Palshikar and Jiayue Meng_
 
 **For a demonstration of the BONITA pipeline, see the below tutorial. The instructions in this README file cover all anticipated use cases.**
 
-This tutorial demostrates the BONITA pipeline for rule inference and pathway analysis on a previously published RNA-sequencing dataset from peripheral blood mononuclear cells from infants with mild or severe respiratory syncitial virus. 
+This tutorial demostrates the BONITA pipeline for rule inference and pathway analysis on a previously published RNA-sequencing dataset from peripheral blood mononuclear cells from infants with mild or severe respiratory syncitial virus. A set of 37 KEGG pathways that are modulated by RSV infection are used for pathway analysis.
 
-Dataset published in:
+__Dataset published in:__
 
-___Mariani TJ, Qiu X, Chu C, Wang L, Thakar J, Holden-Wiltse J, Corbett A, Topham DJ, Falsey AR, Caserta MT, Walsh EE. Association of Dynamic Changes in the CD4 T-Cell Transcriptome With Disease Severity During Primary Respiratory Syncytial Virus Infection in Young Infants. J Infect Dis. 2017 Nov 15;216(8):1027-1037. doi: 10.1093/infdis/jix400. PMID: 28962005; PMCID: PMC5853440.___
+> Mariani TJ, Qiu X, Chu C, Wang L, **Thakar J**, Holden-Wiltse J, Corbett A, Topham DJ, Falsey AR, Caserta MT, Walsh EE. Association of Dynamic Changes in the CD4 T-Cell Transcriptome With Disease Severity During Primary Respiratory Syncytial Virus Infection in Young Infants. J Infect Dis. 2017 Nov 15;216(8):1027-1037. https://doi.org/10.1093/infdis/jix400. PMID: 28962005; PMCID: PMC5853440.
 
 # Installation
 
@@ -78,6 +78,7 @@ tab separated: ```python pathway_analysis_setup.py -t  -gmt Your_gmt_file Your_o
 ### Option 2: On all KEGG pathways for any organism
 
 BONITA needs omics data, organism code, and an indication of what character is used to separate columns in the file. For example, a traditional comma separated value file (csv) would need BONITA input "-sep ,". Since tab can't be passed in as easily, a -t command will automatically flag tab as the separator. A three letter organism code from KEGG must be provided (lower case). Example codes include mmu for mouse and hsa for human. The commands are below:
+
 comma separated: ```python pathway_analysis_setup.py -org Your_org_code -sep , Your_omics_data ```
 
 comma separated, human: ```python pathway_analysis_setup.py -org hsa -sep , Your_omics_data ```
