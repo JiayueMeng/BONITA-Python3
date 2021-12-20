@@ -58,7 +58,7 @@ There are three main steps in BONITA: prepare pathways for rule inference, rule 
 
 BONITA needs omics data, gmt file, and an indication of what character is used to separate columns in the file. For example, a traditional comma separated value file (csv) would need BONITA input "-sep ,". Since tab can't be passed in as easily, a -t command will automatically flag tab as the separator. The commands are below:
 
-'''python pathway_analysis_setup.py -t -org 'hsa' --data 'rsv.extreme.phenotype.CD4.tophat.rpm.filtered.20150310.txt''''
+```python pathway_analysis_setup.py -t -org 'hsa' --data 'rsv.extreme.phenotype.CD4.tophat.rpm.filtered.20150310.txt'```
 
 ## Step 2: Rule inference
 
@@ -74,4 +74,4 @@ To accomplish this, the proper inputs must be provided to pathway_analysis_score
 
 Then run the pathway analysis script:
 
-'''python pathway_analysis_score_pathways.py -t 'rsv.extreme.phenotype.CD4.tophat.rpm.filtered.20150310.txt' 'CD4_matrix.txt' 'diffFile.txt''''
+```python pathway_analysis_score_pathways.py -t 'rsv.extreme.phenotype.CD4.tophat.rpm.filtered.20150310.txt' 'CD4_matrix.txt' 'diffFile.txt'```
