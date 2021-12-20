@@ -59,7 +59,7 @@ You will need the following files to run BONITA:
 * matrix of conditions with each line representing a sample and the first column containing the names of the samples and subsequent columns describing 1/0 if the sample is part of that condition or not. 
 * list of contrasts you would like to run with each contrast on a single line
 
-There are three main steps in BONITA: prepare pathways for rule inference, rule inference, and pathway analysis. All necessary files for an example run are provided in the pathway_analysis folder within experiments folder. The preparation step requires internet access to access the KEGG API. 
+There are three main steps in BONITA: prepare pathways for rule inference, rule inference, and pathway analysis. All necessary files for an example run are provided in the Tutorials folder . The preparation step requires internet access to access the KEGG API. 
 
 ## Step 1: Pathway preparation
 
